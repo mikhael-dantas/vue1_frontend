@@ -1,11 +1,19 @@
 <template>
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav> -->
-  <router-view />
+  <div class="w-full">
+    <Sidebar />
+    <router-view />
+  </div>
 </template>
+<script lang="ts">
+import Sidebar from "./components/SideBar.vue";
 
+export default {
+  name: "App",
+  components: {
+    Sidebar,
+  },
+};
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
