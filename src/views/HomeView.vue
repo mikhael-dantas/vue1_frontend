@@ -43,6 +43,7 @@ import axios from "axios";
 import CreateArticleForm from "../components/CreateArticleForm.vue";
 import ArticleList from "../components/ArticleList.vue";
 import EditArticleForm from "../components/EditArticleForm.vue";
+import { BASEURL } from "@/lib/api";
 
 export interface Article {
   id: string;
@@ -106,9 +107,7 @@ export default defineComponent({
     }
 
     async function fetchArticles() {
-      const response = await axios.get<Article[]>(
-        "http://localhost:3001/articles"
-      );
+      const response = await axios.get<Article[]>(`${BASEURL}/articles`);
       articles.value = response.data;
     }
 
@@ -116,10 +115,7 @@ export default defineComponent({
 
     async function createArticle() {
       try {
-        await axios.post<Article>(
-          "http://localhost:3001/articles",
-          newArticle.value
-        );
+        await axios.post<Article>(`${BASEURL}/articles`, newArticle.value);
         newArticle.value = { name: "", description: "", tags: [] };
         await fetchArticles();
       } catch (error) {
@@ -140,14 +136,12 @@ export default defineComponent({
       try {
         const id = articles.value[selectedArticle.value!].id;
         const response = await axios.put<Article>(
-          `http://localhost:3001/articles/${id}`,
+          `${BASEURL}/articles/${id}`,
           editedArticle.value
         );
         articles.value[selectedArticle.value!] = response.data;
         selectedArticle.value = undefined;
-        const response2 = await axios.get<Article[]>(
-          "http://localhost:3001/articles"
-        );
+        const response2 = await axios.get<Article[]>(`${BASEURL}/articles`);
         articles.value = response2.data;
       } catch (error) {
         console.error(error);
@@ -157,7 +151,7 @@ export default defineComponent({
     async function deleteArticle() {
       try {
         const id = articles.value[selectedArticle.value!].id;
-        await axios.delete<Article>(`http://localhost:3001/articles/${id}`);
+        await axios.delete<Article>(`${BASEURL}/articles/${id}`);
         articles.value.splice(selectedArticle.value!, 1);
         selectedArticle.value = undefined;
       } catch (error) {

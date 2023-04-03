@@ -99,18 +99,7 @@
 
 <script lang="ts">
 // import statements and interfaces here
-import axios from "axios";
 import { defineComponent, ref, toRefs } from "vue";
-import { Article } from "./CreateArticleForm.vue";
-
-const articles = ref<Article[]>([]);
-
-async function fetchArticles() {
-  const response = await axios.get<Article[]>("http://localhost:3001/articles");
-  articles.value = response.data;
-}
-
-fetchArticles();
 
 export default defineComponent({
   name: "EditArticleForm",
